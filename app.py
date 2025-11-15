@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, jsonify
 from flask_cors import CORS
 import os
 from src.controllers.email_controller import EmailController
@@ -20,19 +20,6 @@ def create_app():
     def health_check():
         return email_controller.health_check()
     
-    @app.route('/')
-    def serve_frontend():
-        frontend_path = os.path.join(os.path.dirname(__file__), '../../frontend')
-        return send_from_directory(frontend_path, 'index.html')
-    
-    @app.route('/<path:path>')
-    def serve_static(path):
-        frontend_path = os.path.join(os.path.dirname(__file__), '../../frontend')
-        try:
-            return send_from_directory(frontend_path, path)
-        except:
-            return {"error": "File not found"}, 404
-    
     @app.route('/api')
     def api_info():
         return {
@@ -52,14 +39,8 @@ if __name__ == '__main__':
     config = Config()
     
     host = '0.0.0.0'
-    port = int(os.environ.get('PORT', 8080))  
-    debug = False  #
+    port = int(os.environ.get('PORT', 8080))
+    debug = False
     
     print(f"🚀 Servidor iniciando em http://{host}:{port}")
-    print(f"📁 Diretório atual: {os.getcwd()}")
-    
-    app.run(
-        host=host,
-        port=port,
-        debug=debug
-    )
+    app.run(host=host, port=port, debug=debug)
