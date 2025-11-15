@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0" stop-color="#eff6ff"/>
+      <stop offset="1" stop-color="#f5f3ff"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- abstract blob (transparent background) -->
+  <g transform="translate(80,40)">
+    <path d="M0 200 C60 80 240 20 360 80 C460 130 520 220 480 320 C440 420 260 480 120 420 C-20 360 -20 320 0 200 Z" fill="url(#g1)" opacity="0.12"/>
+  </g>
+
+  <!-- robot simple character -->
+  <g transform="translate(360,170)">
+    <rect x="-80" y="-60" width="160" height="120" rx="20" fill="#fff" stroke="#e6eefb" stroke-width="2"/>
+    <rect x="-60" y="-30" width="40" height="36" rx="8" fill="#2563eb"/>
+    <rect x="20" y="-30" width="40" height="36" rx="8" fill="#8b5cf6"/>
+    <circle cx="-30" cy="10" r="6" fill="#111827" opacity="0.9"/>
+    <circle cx="30" cy="10" r="6" fill="#111827" opacity="0.9"/>
+    <rect x="-40" y="40" width="80" height="12" rx="6" fill="#f3f4f6"/>
+
+    <!-- antenna -->
+    <line x1="0" y1="-60" x2="0" y2="-90" stroke="#111827" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="0" cy="-96" r="6" fill="#f59e0b"/>
+  </g>
+
+  <!-- text bubble -->
+  <g transform="translate(120,340)">
+    <rect x="0" y="0" width="380" height="120" rx="14" fill="#fff" stroke="#e8eefb"/>
+    <path d="M40 120 L60 120 L48 140 Z" fill="#fff"/>
+    <text x="24" y="36" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="20" fill="#111827">Classifique automaticamente</text>
+    <text x="24" y="66" font-family="Inter, Arial, sans-serif" font-size="14" fill="#6b7280">Produtivo • Improdutivo • Sugestão de resposta</text>
+  </g>
+</svg>

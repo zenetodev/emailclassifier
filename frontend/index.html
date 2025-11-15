@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Classifier AI | AutoU Challenge</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">EmailClassifier</span>
+                    <span class="logo-subtitle">AI</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Classificação Inteligente de 
+                        <span class="text-gradient">Emails</span>
+                    </h1>
+                    <p class="hero-description">
+                        Use inteligência artificial para classificar automaticamente emails em 
+                        <strong>produtivos</strong> e <strong>improdutivos</strong>, com respostas automáticas personalizadas.
+                    </p>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>Classificação em tempo real</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-robot"></i>
+                            <span>IA especializada</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Processamento seguro</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="main-grid">
+                <section class="card input-section">
+                    <div class="card-header">
+                        <h2>
+                            <i class="fas fa-envelope-open"></i>
+                            Analisar Email
+                        </h2>
+                        <p>Digite o texto ou faça upload de arquivo para classificação automática</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="upload-options">
+                            <div class="upload-tabs">
+                                <button class="upload-tab active" data-tab="text">📝 Digitar Texto</button>
+                                <button class="upload-tab" data-tab="file">📁 Upload de Arquivo</button>
+                            </div>
+                            
+                            <div class="tab-content active" id="textTab">
+                                <div class="form-group">
+                                    <label for="emailText" class="form-label">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        Conteúdo do Email
+                                    </label>
+                                    <textarea 
+                                        id="emailText" 
+                                        class="form-textarea"
+                                        placeholder="Cole aqui o conteúdo do email ou mensagem para análise..."
+                                        rows="10"
+                                    ></textarea>
+                                    <div class="form-footer">
+                                        <div class="char-count" id="charCount">0 caracteres</div>
+                                        <div class="form-hint">
+                                            <i class="fas fa-lightbulb"></i>
+                                            Dica: Use Ctrl + Enter para classificar rapidamente
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-content" id="fileTab">
+                                <div class="upload-area" id="uploadArea">
+                                    <div class="upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <h3>Arraste arquivos aqui</h3>
+                                    <p>Ou clique para selecionar</p>
+                                    <span class="file-types">Formatos suportados: .txt, .pdf</span>
+                                    <input type="file" id="fileInput" accept=".txt,.pdf" hidden>
+                                    <button class="btn btn-outline btn-lg" onclick="document.getElementById('fileInput').click()">
+                                        <i class="fas fa-folder-open"></i>
+                                        Selecionar Arquivo
+                                    </button>
+                                </div>
+                                
+                                <div class="file-preview" id="filePreview" style="display: none;">
+                                    <div class="file-info">
+                                        <i class="fas fa-file"></i>
+                                        <div class="file-details">
+                                            <span class="file-name" id="fileName">-</span>
+                                            <span class="file-size" id="fileSize">-</span>
+                                        </div>
+                                        <button class="btn btn-sm btn-secondary" onclick="window.emailClassifier.clearFile()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="file-content-preview">
+                                        <pre id="fileContentPreview">Conteúdo do arquivo será exibido aqui...</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-primary btn-lg" id="classifyBtn">
+                                <i class="fas fa-rocket"></i>
+                                Classificar Mensagem
+                            </button>
+                            <button class="btn btn-secondary" id="clearBtn">
+                                <i class="fas fa-eraser"></i>
+                                Limpar
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card results-section" id="resultsSection">
+                    <div class="card-header">
+                        <h2>
+                            <i class="fas fa-chart-bar"></i>
+                            Resultado da Análise
+                        </h2>
+                        <p>Classificação e resposta sugerida pela IA</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="result-item">
+                            <h3 class="result-title">
+                                <i class="fas fa-tag"></i>
+                                Classificação
+                            </h3>
+                            <div class="classification-result">
+                                <div class="category-badge" id="categoryBadge">
+                                    <span class="category-icon">
+                                        <i class="fas fa-question"></i>
+                                    </span>
+                                    <div class="category-info">
+                                        <span class="category-label" id="categoryLabel">Aguardando análise</span>
+                                        <span class="confidence" id="confidenceText"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="result-item">
+                            <h3 class="result-title">
+                                <i class="fas fa-reply"></i>
+                                Resposta Sugerida
+                            </h3>
+                            <div class="response-box">
+                                <div class="response-content">
+                                    <p id="responseText" class="response-text">
+                                        A resposta aparecerá aqui após a classificação...
+                                    </p>
+                                </div>
+                                <div class="response-actions">
+                                    <button class="btn btn-outline btn-sm" id="copyResponseBtn" disabled>
+                                        <i class="fas fa-copy"></i>
+                                        Copiar Resposta
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <h3 class="result-title">
+                                <i class="fas fa-info-circle"></i>
+                                Informações
+                            </h3>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Texto processado:</span>
+                                    <span class="info-value" id="processedText">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Tempo de processamento:</span>
+                                    <span class="info-value" id="processingTime">-</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Método de análise:</span>
+                                    <span class="info-value" id="analysisMethod">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <section class="examples-section">
+                <div class="section-header">
+                    <h2>
+                        <i class="fas fa-vial"></i>
+                        Exemplos para Testar
+                    </h2>
+                    <p>Clique em qualquer exemplo para carregá-lo no classificador</p>
+                </div>
+
+                <div class="examples-grid">
+                    <div class="example-card" data-example="0">
+                        <div class="example-header">
+                            <div class="example-icon productive">
+                                <i class="fas fa-bug"></i>
+                            </div>
+                            <h3>Problema Técnico</h3>
+                        </div>
+                        <p class="example-text">
+                            Email relatando erro crítico no sistema com detalhes específicos que requerem ação imediata da equipe de suporte.
+                        </p>
+                        <button class="btn btn-outline btn-block example-btn">
+                            <i class="fas fa-play"></i>
+                            Testar Este Exemplo
+                        </button>
+                    </div>
+
+                    <div class="example-card" data-example="1">
+                        <div class="example-header">
+                            <div class="example-icon unproductive">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <h3>Mensagem Social</h3>
+                        </div>
+                        <p class="example-text">
+                            Cumprimentos de festas e agradecimentos sem necessidade de ação técnica ou resposta específica da equipe.
+                        </p>
+                        <button class="btn btn-outline btn-block example-btn">
+                            <i class="fas fa-play"></i>
+                            Testar Este Exemplo
+                        </button>
+                    </div>
+
+                    <div class="example-card" data-example="2">
+                        <div class="example-header">
+                            <div class="example-icon productive">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <h3>Dúvida Operacional</h3>
+                        </div>
+                        <p class="example-text">
+                            Perguntas sobre funcionalidades do sistema, prazos de atualização e procedimentos operacionais que requerem resposta.
+                        </p>
+                        <button class="btn btn-outline btn-block example-btn">
+                            <i class="fas fa-play"></i>
+                            Testar Este Exemplo
+                        </button>
+                    </div>
+
+                    <div class="example-card" data-example="3">
+                        <div class="example-header">
+                            <div class="example-icon unproductive">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h3>Feedback Positivo</h3>
+                        </div>
+                        <p class="example-text">
+                            Elogios e agradecimentos pelo serviço prestado, sem solicitações específicas ou problemas a serem resolvidos.
+                        </p>
+                        <button class="btn btn-outline btn-block example-btn">
+                            <i class="fas fa-play"></i>
+                            Testar Este Exemplo
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-brain"></i>
+                    <span>EmailClassifier AI</span>
+                </div>
+                <div class="footer-info">
+                    <span>Desenvolvido para </span>
+                    <strong>AutoU Challenge</strong>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="spinner-large"></div>
+            <h3>Processando sua mensagem...</h3>
+            <p>Isso pode levar alguns segundos</p>
+        </div>
+    </div>
+
+    <div id="notificationContainer"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

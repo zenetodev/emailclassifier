@@ -1,0 +1,12 @@
+flask==2.3.3
+flask-cors==4.0.0
+python-dotenv==1.0.0
+requests==2.31.0
+transformers==4.35.2
+torch==2.1.1
+sentencepiece==0.1.99
+accelerate==0.24.1
+nltk==3.8.1
+pypdf2==3.0.1
+gunicorn==21.2.0
+waitress==2.1.2
