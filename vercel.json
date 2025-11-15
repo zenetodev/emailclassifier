@@ -2,21 +2,25 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
+      "src": "backend/app.py",
       "use": "@vercel/python"
     },
     {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build"
+      "src": "frontend/**/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/backend/app.py"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/app.py"
+      "dest": "/frontend/$1"
     }
   ],
   "env": {
-    "PYTHONPATH": "/var/task/src:/var/task"
+    "PYTHONPATH": "/var/task/backend/src:/var/task/backend"
   }
 }
